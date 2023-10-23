@@ -1,0 +1,21 @@
+{
+  "name": "reporting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "Warren Sadler",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.2.0",
+    "dotenv": "^16.3.1",
+    "env-var": "^7.4.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.10.7"
+  }
+}
