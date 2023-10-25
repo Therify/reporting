@@ -30,15 +30,22 @@ const ACCOUNTS = {
 
 async function main() {
   await client.connect();
-  for await (const _ of Array.from({ length: 50 })) {
+  for await (const _ of Array.from({ length: 500 })) {
+    const row = {
+      event: faker.helpers.arrayElement(Object.values(EVENTS)),
+      user: faker.helpers.arrayElement(Object.values(USERS)),
+      account: faker.helpers.arrayElement(Object.values(ACCOUNTS)),
+      date: faker.date.past(),
+      context: {},
+    };
+    if (row.event === EVENTS.ACCOUNT_CREATED) {
+      row.context = {
+        seats: faker.number.int({ min: 10, max: 100 }),
+      };
+    }
     await client.query(
-      "INSERT INTO activities (action, actor_id, target_id, created_at) values ($1, $2, $3, $4)",
-      [
-        faker.helpers.arrayElement(Object.values(EVENTS)),
-        faker.helpers.arrayElement(Object.values(USERS)),
-        faker.helpers.arrayElement(Object.values(ACCOUNTS)),
-        faker.date.past(),
-      ]
+      "INSERT INTO activities (action, actor_id, target_id, created_at, context) values ($1, $2, $3, $4, $5)",
+      Object.values(row),
     );
   }
 }
